@@ -8,12 +8,29 @@ export default async function handle(req, res) {
   const { title, content } = req.body;
 
   const session = await getSession({ req });
-  const result = await prisma.post.create({
-    data: {
-      title: title,
-      content: content,
-      author: { connect: { email: session?.user?.email } },
-    },
-  });
-  res.json(result);
+
+  // Validate session and email
+  if (!session || !session.user?.email) {
+    return res.status(401).json({ message: "Unauthorized - Please sign in" });
+  }
+
+  if (!title) {
+    return res.status(400).json({ message: "Title is required" });
+  }
+
+  try {
+    const result = await prisma.post.create({
+      data: {
+        title: title,
+        content: content,
+        author: { connect: { email: session.user.email } },
+      },
+    });
+    res.json(result);
+  } catch (error) {
+    console.error("Error creating post:", error);
+    res
+      .status(500)
+      .json({ message: "Error creating post", error: error.message });
+  }
 }
