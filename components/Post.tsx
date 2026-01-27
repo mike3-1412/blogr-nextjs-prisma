@@ -3,7 +3,7 @@ import Router from "next/router";
 import ReactMarkdown from "react-markdown";
 
 export type PostProps = {
-  id: string;
+  id: number;
   title: string;
   author: {
     name: string;
@@ -14,15 +14,23 @@ export type PostProps = {
 };
 
 const Post: React.FC<{ post: PostProps }> = ({ post }) => {
-  const authorName = post.author ? post.author.name : "Unknown author";
+  const authorName = post.author?.name ?? "Unknown author";
+
   return (
-    <div onClick={() => Router.push("/p/[id]", `/p/${post.id}`)}>
+    <div
+      onClick={() => {
+        if (post.published) {
+          Router.push(`/p/${post.id}`);
+        }
+      }}
+    >
       <h2>{post.title}</h2>
       <small>By {authorName}</small>
-      <ReactMarkdown children={post.content} />
+      <ReactMarkdown>{post.content}</ReactMarkdown>
+
       <style jsx>{`
         div {
-          color: inherit;
+          cursor: ${post.published ? "pointer" : "default"};
           padding: 2rem;
         }
       `}</style>

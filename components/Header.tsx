@@ -1,56 +1,60 @@
-import React from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
+import { signOut, useSession } from "next-auth/react";
 
-const Header: React.FC = () => {
+export default function Header() {
   const router = useRouter();
-  const isActive: (pathname: string) => boolean = (pathname) =>
-    router.pathname === pathname;
+  const { data: session, status } = useSession();
 
-  let left = (
-    <div className="left">
-      <Link href="/">
-        <a className="bold" data-active={isActive("/")}>
-          Feed
-        </a>
-      </Link>
-      <style jsx>{`
-        .bold {
-          font-weight: bold;
-        }
-
-        a {
-          text-decoration: none;
-          color: #000;
-          display: inline-block;
-        }
-
-        .left a[data-active="true"] {
-          color: gray;
-        }
-
-        a + a {
-          margin-left: 1rem;
-        }
-      `}</style>
-    </div>
-  );
-
-  let right = null;
+  const isActive = (path: string) => router.pathname === path;
 
   return (
-    <nav>
-      {left}
-      {right}
+    <nav className="nav">
+      <div className="left">
+        <Link href="/" className={isActive("/") ? "active" : ""}>
+          Feed
+        </Link>
+
+        {session && (
+          <Link href="/drafts" className={isActive("/drafts") ? "active" : ""}>
+            My drafts
+          </Link>
+        )}
+      </div>
+
+      <div className="right">
+        {status === "loading" && <p>Loading...</p>}
+
+        {!session && <Link href="/api/auth/signin">Log in</Link>}
+
+        {session && (
+          <>
+            <span>{session.user?.name}</span>
+            <Link href="/create">New post</Link>
+            <button onClick={() => signOut()}>Log out</button>
+          </>
+        )}
+      </div>
+
       <style jsx>{`
-        nav {
+        .nav {
           display: flex;
-          padding: 2rem;
+          padding: 1.5rem;
           align-items: center;
+        }
+        .left a {
+          margin-right: 1rem;
+        }
+        .right {
+          margin-left: auto;
+        }
+        .active {
+          font-weight: bold;
+        }
+        button {
+          margin-left: 1rem;
         }
       `}</style>
     </nav>
   );
-};
-
-export default Header;
+}

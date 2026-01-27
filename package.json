@@ -4,21 +4,28 @@
   "description": "",
   "scripts": {
     "dev": "next",
-    "build": "next build",
+    "build": "prisma generate && next build",
     "start": "next start"
   },
   "keywords": [],
   "author": "",
   "license": "MIT",
   "dependencies": {
-    "next": "12.0.10",
-    "react": "17.0.2",
-    "react-dom": "17.0.2",
-    "react-markdown": "8.0.0"
+    "@next-auth/prisma-adapter": "^1.0.7",
+    "@prisma/adapter-pg": "^7.2.0",
+    "@prisma/client": "^5.22.0",
+    "next": "^14.2.35",
+    "next-auth": "^4.24.13",
+    "pg": "^8.17.1",
+    "prisma": "^5.22.0",
+    "react": "^18.0.0",
+    "react-dom": "^18.0.0",
+    "react-markdown": "8.0.0",
+    "vercel": "^50.5.0"
   },
   "devDependencies": {
-    "@types/node": "17.0.14",
-    "@types/react": "17.0.38",
-    "typescript": "4.5.5"
+    "@types/node": "^20.0.0",
+    "@types/react": "^18.0.0",
+    "typescript": "^5.9.3"
   }
 }
