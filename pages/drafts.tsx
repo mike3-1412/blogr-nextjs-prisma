@@ -17,9 +17,13 @@ export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
       author: { email: session.user.email },
       published: false,
     },
-    include: {
+    select: {
+      id: true,
+      title: true,
+      content: true,
+      published: true,
       author: {
-        select: { name: true },
+        select: { name: true, email: true },
       },
     },
   });

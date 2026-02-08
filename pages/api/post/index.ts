@@ -1,5 +1,6 @@
-import { getSession } from "next-auth/react";
+import { getServerSession } from "next-auth/next";
 import prisma from "../../../lib/prisma";
+import { authOptions } from "../auth/[...nextauth]";
 
 // POST /api/post
 // Required fields in body: title
@@ -7,7 +8,7 @@ import prisma from "../../../lib/prisma";
 export default async function handle(req, res) {
   const { title, content } = req.body;
 
-  const session = await getSession({ req });
+  const session = await getServerSession(req, res, authOptions);
 
   // Validate session and email
   if (!session || !session.user?.email) {
