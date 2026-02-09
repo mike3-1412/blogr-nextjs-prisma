@@ -20,6 +20,7 @@ const Draft: React.FC = () => {
       console.error(error);
     }
   };
+
   return (
     <Layout>
       <div>
@@ -47,7 +48,7 @@ const Draft: React.FC = () => {
       </div>
       <style jsx>{`
         .page {
-          background: var(--geist-background);
+          background: white;
           padding: 3rem;
           display: flex;
           justify-content: center;

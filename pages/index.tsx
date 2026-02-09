@@ -13,7 +13,7 @@ export const getServerSideProps: GetServerSideProps = async () => {
   });
 
   return {
-    props: { feed },
+    props: { feed: JSON.parse(JSON.stringify(feed)) },
   };
 };
 

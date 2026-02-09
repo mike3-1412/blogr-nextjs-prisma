@@ -40,7 +40,7 @@ async function deletePost(id: string): Promise<void> {
   await fetch(`/api/post/${id}`, {
     method: "DELETE",
   });
-  await Router.push("/");
+  Router.push("/");
 }
 const Post: React.FC<PostProps> = (props) => {
   const { data: session, status } = useSession();
@@ -59,7 +59,7 @@ const Post: React.FC<PostProps> = (props) => {
       <div>
         <h2>{title}</h2>
         <p>By {props?.author?.name || "Unknown author"}</p>
-        <ReactMarkdown>{props.content}</ReactMarkdown>
+        <ReactMarkdown children={props.content} />
         {!props.published && userHasValidSession && postBelongsToUser && (
           <button onClick={() => publishPost(props.id)}>Publish</button>
         )}
