@@ -47,4 +47,6 @@ export default async function handle(req, res) {
     where: { id: postId },
     data: { published: true },
   });
+
+  res.status(200).json({ message: "Post published successfully" });
 }

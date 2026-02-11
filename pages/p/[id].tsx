@@ -31,10 +31,16 @@ export const getServerSideProps: GetServerSideProps = async ({ params }) => {
 };
 
 async function publishPost(id: string): Promise<void> {
-  await fetch(`/api/publish/${id}`, {
+  const response = await fetch(`/api/publish/${id}`, {
     method: "PUT",
   });
-  await Router.push("/");
+  if (response.ok) {
+    await Router.push("/");
+  } else {
+    console.error("Failed to publish post");
+    // Optionally, show an alert or handle error
+    alert("Failed to publish the post. Please try again.");
+  }
 }
 async function deletePost(id: string): Promise<void> {
   await fetch(`/api/post/${id}`, {
