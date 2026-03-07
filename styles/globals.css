@@ -5,6 +5,17 @@
   /* Colors */
   --color-primary: #111827;
   --color-primary-hover: #000000;
+  --color-primary-dark: #0f172a;
+
+  /* Legacy variable aliases for compatibility */
+  --primary: var(--color-primary);
+  --primary-hover: var(--color-primary-hover);
+  --primary-dark: var(--color-primary-dark);
+  --surface: var(--color-surface);
+  --background: var(--color-background);
+  --border: var(--color-border);
+  --text: var(--color-text);
+  --text-light: var(--color-text-light);
   --color-surface: #ffffff;
   --color-background: #f9fafb;
   --color-border: #e5e7eb;
